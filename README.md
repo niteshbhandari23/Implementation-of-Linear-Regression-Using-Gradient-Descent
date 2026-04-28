@@ -20,57 +20,38 @@ Program to implement the linear regression using gradient descent.
 Developed by: NITESH BHANDARI K
 RegisterNumber:  212225240101
 
-
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
-
-# Input data
-x = np.array(eval(input("Enter population values: ")))
-y = np.array(eval(input("Enter profit values: ")))
-
-# Number of training examples
-m = len(x)
-
-# Initialize parameters
-theta0 = 0
-theta1 = 0
-
-# Learning rate
-alpha = 0.01
-
-# Number of iterations
-iterations = 1000
-
-# Gradient Descent
-for i in range(iterations):
-    h = theta0 + theta1 * x
-    
-    temp0 = (1/m) * np.sum(h - y)
-    temp1 = (1/m) * np.sum((h - y) * x)
-    
-    theta0 = theta0 - alpha * temp0
-    theta1 = theta1 - alpha * temp1
-
-# Predicted values
-prediction = theta0 + theta1 * x
-
-# Output
-print("Intercept (theta0):", theta0)
-print("Slope (theta1):", theta1)
-
-# Graph
-plt.scatter(x, y, color='blue', label="Training Data")
-plt.plot(x, prediction, color='red', label="Regression Line")
-plt.xlabel("Population")
+data = pd.read_csv("Startup.csv")
+X = data['R&D Spend'].values
+y = data['Profit'].values
+X = (X - X.mean()) / X.std()
+m = 0
+b = 0
+learning_rate = 0.01
+epochs = 1000
+n = len(X)
+for i in range(epochs):
+    y_pred = m * X + b
+    dm = (-2/n) * np.sum(X * (y - y_pred))
+    db = (-2/n) * np.sum(y - y_pred)
+    m = m - learning_rate * dm
+    b = b - learning_rate * db
+print("Slope (m):", m)
+print("Intercept (b):", b)
+y_pred = m * X + b
+plt.scatter(X, y)
+plt.plot(X, y_pred)
+plt.xlabel("R&D Spend (Normalized)")
 plt.ylabel("Profit")
-plt.title("Linear Regression using Gradient Descent")
-plt.legend()
+plt.title("Gradient Descent on 50_Startups Dataset")
 plt.show()
 */
 ```
 
 ## Output:
-<img width="581" height="440" alt="image" src="https://github.com/user-attachments/assets/7054e74e-5225-445a-861b-3c83a14cd5cb" />
+<img width="993" height="725" alt="expr3ml" src="https://github.com/user-attachments/assets/e0e24c82-0965-41ec-a0ed-7d2466e079dc" />
 
 
 ## Result:
